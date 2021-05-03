@@ -1,6 +1,6 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,14 +8,18 @@
 <link rel="stylesheet" href="style.css">
 <link href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
 	rel="stylesheet">
-	
-	  <link href="https://doc.cantieriprotetti.it/js/tablesorter/css/theme.default.min.css" rel="stylesheet" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.widgets.min.js"></script>
-	
-	
+
+<link
+	href="https://doc.cantieriprotetti.it/js/tablesorter/css/theme.default.min.css"
+	rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.widgets.min.js"></script>
+
+
 <title>People database project</title>
 </head>
 <h2>Current Database</h2>
@@ -36,7 +40,6 @@
 			</tr>
 		</thead>
 		<tbody>
-
 			<c:forEach items="${allPersons}" var="currentPerson">
 				<tr>
 					<td>${currentPerson.id}</td>
@@ -63,7 +66,8 @@
 						</form>
 						<form class="submit-button" name="delete" method="post"
 							action="delete?id=${currentPerson.id}"
-							onSubmit="return confirm('Do you want to delete this person?') & window.location.reload()">
+							data-confirm="Do you really want to delete this person?">
+
 							<button class="test" type="submit">
 								<i style="color: #993333" class="fas fa-trash"> </i>
 							</button>
@@ -80,25 +84,44 @@
 			</c:forEach>
 
 		</tbody>
-
 	</table>
+	<script>
+		$(document).on('click', ':not(form)[data-confirm]', function(e) {
+			if (!confirm($(this).data('confirm'))) {
+				e.stopImmediatePropagation();
+				e.preventDefault();
+			}
+		});
 
+		$(document).on('submit', 'form[data-confirm]', function(e) {
+			if (!confirm($(this).data('confirm'))) {
+				e.stopImmediatePropagation();
+				e.preventDefault();
+			}
+		});
 
-  <script>
+		$(document).on('input', 'select', function(e) {
+			var msg = $(this).children('option:selected').data('confirm');
+			if (msg != undefined && !confirm(msg)) {
+				$(this)[0].selectedIndex = 0;
+			}
+		});
 
-    $(document).ready(function () {
-      $("#myTable").tablesorter({
-        sortList: [[$("#myTable").colCount() - 1, 0]],
-        theme: "default",
-      });
-    });
-    
-    $("#myTable").tablesorter({
-        headers: {8: {sorter: false}}
-    });
-  </script>
+		$(document).ready(function() {
+			$("#myTable").tablesorter({
+				sortList : [ [ $("#myTable").colCount() - 1, 0 ] ],
+				theme : "default",
+			});
+		});
 
-
+		$("#myTable").tablesorter({
+			headers : {
+				8 : {
+					sorter : false
+				}
+			}
+		});
+	</script>
 	<div class="addPerson-button">
 		<a class="addNewPerson" href="addPerson.jsp">Add new person</a>
 
