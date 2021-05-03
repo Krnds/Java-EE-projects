@@ -6,8 +6,8 @@ People database is a Java/Jakarta EE project made without Spring to explore JSP/
 
 The database can be accessed in CLI form or in a web application.
 
-![Overview](/img/snapshot_database.png)
-<img src="/img/snapshot_database_2.png" alt="overview" width="250"/>
+![Overview](./img/snapshot_database.png)
+<img src="./img/snapshot_database_2.png" alt="Overview" width="250"/>
 
 ## Usage
 
@@ -33,7 +33,7 @@ The database can be accessed in CLI form or in a web application.
 - [X] Learn JQuery to :
 
     - [X] Sort database main table by columns
-    - [ ] Prevent entry from deleting when trash button is called
+    - [X] Prevent entry from deleting when trash button is called
 
 - [X] Update CSS
 
